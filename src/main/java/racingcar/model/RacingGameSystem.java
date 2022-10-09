@@ -7,11 +7,6 @@ import org.assertj.core.util.Sets;
 
 public class RacingGameSystem {
     private RacingGame racingGame;
-
-    public RacingGameSystem() {
-        List<Car> carList = createRacingCars();
-        racingGame = new RacingGame(carList);
-    }
     private List<Car> createRacingCars() {
         String carNames = GameGuide.printAskRacingCarNames();
         validateCarNames(carNames);
@@ -25,8 +20,12 @@ public class RacingGameSystem {
     }
 
     public void run() {
+        List<Car> carList = createRacingCars();
+        racingGame = new RacingGame(carList);
+
         Integer gameCount = inputGameCount();
         racingGame.start(gameCount);
+        racingGame.judgeWinner();
     }
 
     private Integer inputGameCount() {
@@ -47,7 +46,8 @@ public class RacingGameSystem {
 
     private void validateCarNameSize(String carName) {
         if (carName.length() > 5) {
-            throw new IllegalArgumentException("[ERROR] 자동차 이름은 5자 이하여야 합니다. - wrong car name:" + carName);
+            throw new IllegalArgumentException("[ERROR]");
+//            throw new IllegalArgumentException("[ERROR] 자동차 이름은 5자 이하여야 합니다. - wrong car name:" + carName);
         }
     }
 
