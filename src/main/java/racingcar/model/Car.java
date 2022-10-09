@@ -14,12 +14,8 @@ public class Car {
         record.append(road);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getRecord() {
-        return record.toString();
+    public void printRecord() {
+        System.out.println(name + " : " + record.toString());
     }
 
 }

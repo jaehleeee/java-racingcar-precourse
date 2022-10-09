@@ -6,7 +6,13 @@ import org.assertj.core.util.Lists;
 import org.assertj.core.util.Sets;
 
 public class RacingGameSystem {
-    private List<Car> createCarList() {
+    private RacingGame racingGame;
+
+    public RacingGameSystem() {
+        List<Car> carList = createRacingCars();
+        racingGame = new RacingGame(carList);
+    }
+    private List<Car> createRacingCars() {
         String carNames = GameGuide.printAskRacingCarNames();
         validateCarNames(carNames);
 
@@ -19,10 +25,7 @@ public class RacingGameSystem {
     }
 
     public void run() {
-        List<Car> carList = createCarList();
         Integer gameCount = inputGameCount();
-
-        RacingGame racingGame = new RacingGame(carList);
         racingGame.start(gameCount);
     }
 

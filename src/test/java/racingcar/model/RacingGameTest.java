@@ -26,7 +26,7 @@ class RacingGameTest {
     void test() {
         racingGame.start(10);
         for(Car car : carList) {
-            System.out.println(car.getName() + " " + car.getRecord());
+            car.printRecord();
         }
     }
 }

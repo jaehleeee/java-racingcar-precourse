@@ -1,6 +1,7 @@
 package racingcar.model;
 
 import static racingcar.constant.Common.*;
+import static racingcar.constant.Message.RACE_ROUND_RESULT;
 
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.List;
@@ -13,8 +14,10 @@ public class RacingGame {
     }
 
     public void start(Integer racingCount) {
+        System.out.println(RACE_ROUND_RESULT);
         for (int i = 0; i < racingCount; i++) {
             raceRound();
+            printRecord();
         }
     }
 
@@ -29,5 +32,12 @@ public class RacingGame {
         if(raceNumber >= CAN_GO_MIN_NUMBER) {
             car.goRoad();
         }
+    }
+
+    private void printRecord() {
+        for(Car car : carList) {
+            car.printRecord();
+        }
+        System.out.println();
     }
 }
