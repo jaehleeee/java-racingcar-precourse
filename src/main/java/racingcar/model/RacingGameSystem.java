@@ -8,16 +8,18 @@ import org.assertj.core.util.Sets;
 
 public class RacingGameSystem {
     private RacingGame racingGame;
+    private RacingJudge racingJudge;
     private String carNames;
     private Integer gameCount;
 
     public void run() {
         List<Car> carList = createRacingCars();
         racingGame = new RacingGame(carList);
+        racingJudge = new RacingJudge(carList);
 
         getGameCount();
         racingGame.start(gameCount);
-        racingGame.judgeWinner();
+        racingJudge.judgeWinner();
     }
 
     private List<Car> createRacingCars() {

@@ -17,6 +17,10 @@ public class Car {
         return name;
     }
 
+    public void setGoCount(Integer goCount) {
+        this.goCount = goCount;
+    }
+
     public Integer getGoCount() {
         return goCount;
     }
