@@ -1,23 +1,38 @@
 package racingcar.model;
 
+import java.util.List;
 import java.util.Set;
+import org.assertj.core.util.Lists;
 import org.assertj.core.util.Sets;
 
 public class RacingGameSystem {
 
-    private String carNames;
-    private String gameCount;
+    private List<Car> carList;
+    public void setCars() {
+        String carNames = GameGuide.printAskRacingCarNames();
+        setCarListBy(carNames);
+    }
 
-    public void init() {
-        carNames = GameGuide.printAskRacingCarNames();
+    private void setCarListBy(String carNames) {
         validateCarNames(carNames);
-        gameCount = GameGuide.printAskRacingGameCount();
-        validateGameCount(gameCount);
+
+        carList = Lists.newArrayList();
+        for (String carName : carNames.split(",")) {
+            carList.add(new Car(carName));
+        }
     }
 
     public void run() {
-        //TODO: 횟수만큼 레이싱 시작
+        Integer gameCount = inputGameCount();
 
+        RacingGame racingGame = new RacingGame();
+        racingGame.start(carList, gameCount);
+    }
+
+    private Integer inputGameCount() {
+        String gameCountString = GameGuide.printAskRacingGameCount();
+        validateGameCount(gameCountString);
+        return Integer.valueOf(gameCountString);
     }
 
     public void validateCarNames(String carNames) {
