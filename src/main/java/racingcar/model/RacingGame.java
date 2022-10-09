@@ -25,6 +25,26 @@ public class RacingGame {
         }
     }
 
+    public void raceRound() {
+        for (Car car : carList) {
+            Integer raceNumber = Randoms.pickNumberInRange(RACE_START_IDX, RACE_LAST_IDX);
+            racing(car, raceNumber);
+        }
+    }
+
+    public void racing(Car car, Integer raceNumber) {
+        if (raceNumber >= CAN_GO_MIN_NUMBER) {
+            car.goRoad();
+        }
+    }
+
+    private void printRecord() {
+        for (Car car : carList) {
+            car.printRecord();
+        }
+        System.out.println();
+    }
+
     public void judgeWinner() {
         List<Car> winners = Lists.newArrayList();
         for (Car newCar : carList) {
@@ -52,36 +72,19 @@ public class RacingGame {
             return winners;
         }
 
-        return findNewWinner(winners, newCar);
+        return compareWinner(winners, newCar);
     }
 
-    private List<Car> findNewWinner(List<Car> winners, Car newCar) {
+    private List<Car> compareWinner(List<Car> winners, Car newCar) {
         Car anyWinnerCar = winners.get(0);
+        if (anyWinnerCar.getGoCount() > newCar.getGoCount()) {
+            return winners;
+        }
+
         if (anyWinnerCar.getGoCount() < newCar.getGoCount()) {
             winners.clear();
         }
-
         winners.add(newCar);
         return winners;
-    }
-
-    private void raceRound() {
-        for (Car car : carList) {
-            racing(car);
-        }
-    }
-
-    private void racing(Car car) {
-        Integer raceNumber = Randoms.pickNumberInRange(RACE_START_IDX, RACE_LAST_IDX);
-        if (raceNumber >= CAN_GO_MIN_NUMBER) {
-            car.goRoad();
-        }
-    }
-
-    private void printRecord() {
-        for (Car car : carList) {
-            car.printRecord();
-        }
-        System.out.println();
     }
 }
