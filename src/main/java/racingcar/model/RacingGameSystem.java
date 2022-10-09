@@ -1,15 +1,27 @@
 package racingcar.model;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import org.assertj.core.util.Lists;
 import org.assertj.core.util.Sets;
 
 public class RacingGameSystem {
     private RacingGame racingGame;
+    private String carNames;
+    private Integer gameCount;
+
+    public void run() {
+        List<Car> carList = createRacingCars();
+        racingGame = new RacingGame(carList);
+
+        getGameCount();
+        racingGame.start(gameCount);
+        racingGame.judgeWinner();
+    }
+
     private List<Car> createRacingCars() {
-        String carNames = GameGuide.printAskRacingCarNames();
-        validateCarNames(carNames);
+        getCarNames();
 
         List<Car> carList = Lists.newArrayList();
         for (String carName : carNames.split(",")) {
@@ -19,19 +31,37 @@ public class RacingGameSystem {
         return carList;
     }
 
-    public void run() {
-        List<Car> carList = createRacingCars();
-        racingGame = new RacingGame(carList);
-
-        Integer gameCount = inputGameCount();
-        racingGame.start(gameCount);
-        racingGame.judgeWinner();
+    private void getCarNames() {
+        do {
+            inputCarNames();
+        } while (Objects.isNull(carNames));
     }
 
-    private Integer inputGameCount() {
-        String gameCountString = GameGuide.printAskRacingGameCount();
-        validateGameCount(gameCountString);
-        return Integer.valueOf(gameCountString);
+    private void inputCarNames() {
+        try {
+            carNames = GameGuide.printAskRacingCarNames();
+            validateCarNames(carNames);
+        } catch(IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            carNames = null;
+        }
+    }
+
+    private void getGameCount() {
+        do {
+            inputGameCount();
+        } while (Objects.isNull(gameCount));
+    }
+
+    private void inputGameCount() {
+        try {
+            String gameCountString = GameGuide.printAskRacingGameCount();
+            gameCount = convertGameCountToInteger(gameCountString);
+        } catch(IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            carNames = null;
+        }
+
     }
 
     public void validateCarNames(String carNames) {
@@ -46,8 +76,7 @@ public class RacingGameSystem {
 
     private void validateCarNameSize(String carName) {
         if (carName.length() > 5) {
-            throw new IllegalArgumentException("[ERROR]");
-//            throw new IllegalArgumentException("[ERROR] 자동차 이름은 5자 이하여야 합니다. - wrong car name:" + carName);
+            throw new IllegalArgumentException("[ERROR] 자동차 이름은 5자 이하여야 합니다. - wrong car name:" + carName);
         }
     }
 
@@ -58,9 +87,9 @@ public class RacingGameSystem {
         }
     }
 
-    public void validateGameCount(String gameCount) {
+    public Integer convertGameCountToInteger(String gameCount) {
         try {
-            Integer.valueOf(gameCount);
+            return Integer.valueOf(gameCount);
         } catch (Exception e) {
             throw new IllegalArgumentException("[ERROR] 시도할 횟수는 숫자로 입력해야 합니다. - wrong car count:" + gameCount);
         }

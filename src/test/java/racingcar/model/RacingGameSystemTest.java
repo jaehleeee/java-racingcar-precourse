@@ -21,7 +21,7 @@ class RacingGameSystemTest {
     @DisplayName("올바른 자동차 이름 validation 테스트")
     void carCorrectNameValidationTest() {
         String carNames = "bmw,kia,benz";
-        assertThatNoException().isThrownBy(()->racingGameSystem.validateCarNames(carNames));
+        assertThatNoException().isThrownBy(() -> racingGameSystem.validateCarNames(carNames));
     }
 
     @ParameterizedTest()
@@ -38,11 +38,11 @@ class RacingGameSystemTest {
     @DisplayName("자동차 경주 횟수 validation")
     void carCountValidationTest() {
         String carCount = "12";
-        assertThatNoException().isThrownBy(()->racingGameSystem.validateGameCount(carCount));
+        assertThatNoException().isThrownBy(() -> racingGameSystem.convertGameCountToInteger(carCount));
 
         String wrongCarCount = "fff";
         assertThatThrownBy(() -> {
-            racingGameSystem.validateGameCount(wrongCarCount);
+            racingGameSystem.convertGameCountToInteger(wrongCarCount);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 }

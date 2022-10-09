@@ -25,7 +25,7 @@ class RacingGameTest {
     @DisplayName("RacingGame 정상 동작 테스트")
     void test() {
         racingGame.start(10);
-        for(Car car : carList) {
+        for (Car car : carList) {
             car.printRecord();
         }
     }

@@ -37,11 +37,11 @@ public class RacingGame {
 
     private String convertWinnerNames(List<Car> winners) {
         StringBuilder builder = new StringBuilder();
-        for (int i=0; i<winners.size()-1; i++) {
+        for (int i = 0; i < winners.size() - 1; i++) {
             builder.append(winners.get(i).getName() + ", ");
         }
 
-        builder.append(winners.get(winners.size()-1).getName());
+        builder.append(winners.get(winners.size() - 1).getName());
 
         return builder.toString();
     }
@@ -73,13 +73,13 @@ public class RacingGame {
 
     private void racing(Car car) {
         Integer raceNumber = Randoms.pickNumberInRange(RACE_START_IDX, RACE_LAST_IDX);
-        if(raceNumber >= CAN_GO_MIN_NUMBER) {
+        if (raceNumber >= CAN_GO_MIN_NUMBER) {
             car.goRoad();
         }
     }
 
     private void printRecord() {
-        for(Car car : carList) {
+        for (Car car : carList) {
             car.printRecord();
         }
         System.out.println();
